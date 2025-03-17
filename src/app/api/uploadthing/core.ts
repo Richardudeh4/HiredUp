@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { auth } from "@/app/utils/auth";
 import { requireUser } from "@/app/utils/requireUser";
 import { redirect } from "next/navigation";

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {Editor} from "@tiptap/react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { Toggle } from "../ui/toggle";

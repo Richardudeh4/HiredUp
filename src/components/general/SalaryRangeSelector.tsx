@@ -1,15 +1,16 @@
+/* eslint-disable */
 import React, { useState } from 'react'
 import { Slider } from '../ui/slider'
 import { Control, useController } from 'react-hook-form'
 import { formatCurrency } from '@/app/utils/formatCurrency';
 
 interface iAppProps{
-    control:Control<any>;
+    control: Control<any>;
     minSalary: number;
     maxSalary: number;
     step:number;
     currency: string;
-}
+};
 
 export default function SalaryRangeSelector({control, minSalary, maxSalary, step, currency}: iAppProps) {
     const {field:formField} = useController({

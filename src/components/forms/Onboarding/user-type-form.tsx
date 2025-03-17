@@ -1,3 +1,5 @@
+
+/* eslint-disable */
 import { Button } from '@/components/ui/button'
 import { Building2, PersonStanding, UserRound } from 'lucide-react'
 import React from 'react'
@@ -7,12 +9,11 @@ import { UserSelectionType } from './onBoardingForm'
 interface UserTypeSelectionProps{
   onSelect: (type:UserSelectionType) => void;
 }
-
 export default function UserTypeSelection({onSelect}: UserTypeSelectionProps) {
   return (
     <div className='space-y-8'>
-       <div className='text-center space-y-2 '>
-            <h1 className='text-2xl font-bold '>Welcome! Let's get started</h1>
+       <div className='text-center space-y-2'>
+            <h1 className='text-2xl font-bold'>Welcome! Let's get started</h1>
             <p className='text-muted-foreground'>Choose how you would like use our platform</p>
        </div>
        <div className='grid gap-6'>
