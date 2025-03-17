@@ -7,7 +7,6 @@ import disney from "../../../../public/assets/disney.svg";
 import figma from "../../../../public/assets/figma.svg";
 import ibm from "../../../../public/assets/ibm.svg";
 import paypal from "../../../../public/assets/paypal.svg";
-import runway from "../../../../public/assets/runway.svg";
 import spotify from "../../../../public/assets/spotify.svg";
 import CreateJobForm from '@/components/forms/createJobForm';
 const companies = [
