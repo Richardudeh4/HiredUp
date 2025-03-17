@@ -18,7 +18,7 @@ export default function UserTypeSelection({onSelect}: UserTypeSelectionProps) {
        <div className='grid gap-6'>
             <Button 
             onClick={() => onSelect("company")}
-            variant="outline" className='bg-yellow-500 w-full h-auto p-6 items-center gap-4 border-2 transition-all duration-200 hover:border-primary hover:bg-primary/5'>
+            variant="outline" className='w-full h-auto p-6 items-center gap-4 border-2 transition-all duration-200 hover:border-primary hover:bg-primary/5'>
                 <div className='size-12 rounded-full bg-yellow-300/10 flex items-center justify-center'>
                 <Building2/>
                 </div>
@@ -29,7 +29,7 @@ export default function UserTypeSelection({onSelect}: UserTypeSelectionProps) {
             </Button>
             <Button 
            onClick={() => onSelect("jobbseeker")}
-            variant="outline" className='bg-slate-600 w-full h-auto p-6 items-center gap-4 border-2 transition-all duration-200 hover:border-primary hover:bg-primary/5'>
+            variant="outline" className=' w-full h-auto p-6 items-center gap-4 border-2 transition-all duration-200 hover:border-primary hover:bg-primary/5'>
                 <div className='size-12 rounded-full bg-yellow-300/10 flex items-center justify-center'>
                 <UserRound/>
                 </div>

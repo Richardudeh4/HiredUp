@@ -9,7 +9,7 @@ export default function Login() {
       <div className='flex w-full max-w-sm flex-col gap-6'>
         <Link href="/" className='flex gap-3 items-center self-center'>
         <Image src={logo} alt="logo" className='size-10'/>
-        <h1 className='text-2xl font-bold'>Hired<span className='text-yellow-400'>Up</span></h1>
+        <h1 className='text-2xl font-bold'>Hired<span className='text-primary'>Up</span></h1>
         </Link>
         <LoginForm/>
       </div>

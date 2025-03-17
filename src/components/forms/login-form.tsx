@@ -28,7 +28,7 @@ const LoginForm = async() => {
                 <form action={ async () => {
                         "use server";
                         await signIn("github", {
-                            redirectTo: "/",
+                            redirectTo: "/onBoarding",
                         })
                         }
                     }>
@@ -38,7 +38,7 @@ const LoginForm = async() => {
                     async () => {
                         "use server";
                         await signIn("google", {
-                            redirectTo: "/",
+                            redirectTo: "/onBoarding",
                         })
                     }
                 }>

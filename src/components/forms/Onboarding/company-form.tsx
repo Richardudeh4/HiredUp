@@ -1,10 +1,16 @@
+import { createCompany } from '@/app/actions'
 import { countryList } from '@/app/utils/countryList'
 import { companySchema } from '@/app/utils/zodSchema'
+import { UploadDropzone } from '@/components/general/uploadthing'
+import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
+import { XIcon } from 'lucide-react'
+import Image from 'next/image'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -19,10 +25,24 @@ const CompanyForm = () => {
             website: "",
             xAccount: "", 
         }
-    })
+    });
+    const [pending, setPending] = useState<boolean>(false);
+    async function onSubmit(data: z.infer<typeof companySchema>){
+        try{
+        setPending(true);
+        await createCompany(data);
+        }catch(error){
+            if(error instanceof Error && error.message !== "NEXT_REDIRECT"){
+                console.log("Something went wrong");
+            }
+        }finally{
+            setPending(false);
+        }
+    }
+
   return (
     <Form  {...form}>
-        <form className='space-y-6'>
+        <form className='space-y-6' onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <FormField
             control={form.control}
@@ -52,7 +72,7 @@ const CompanyForm = () => {
                         <SelectValue placeholder="Select Location"/>
                     </SelectTrigger>
                 </FormControl>
-                <SelectContent className='bg-black '>
+                <SelectContent className=''>
                     <SelectGroup>
                         <SelectLabel>Worldwide</SelectLabel>
                         <SelectItem value='worldwide'>
@@ -65,7 +85,7 @@ const CompanyForm = () => {
                         {countryList.map((country) => (
                             <SelectItem value={country.name} key={country.name}>
                                  <span>{country.flag}</span>
-                                 <span className='pl-2'>{country.name}</span>
+                                 <span className='pl-2 '>{country.name}</span>
                             </SelectItem>
                         ))}
                     </SelectGroup>
@@ -111,12 +131,60 @@ const CompanyForm = () => {
                 <FormItem>  
                 <FormLabel>About</FormLabel>
                 <FormControl>
-                    <Input placeholder="@yourCompany" {...field}/>
+                   <Textarea
+                   placeholder="Tell us about your company..."
+                   {...field }
+                   />
                 </FormControl>
                 <FormMessage/> 
                 </FormItem>
             )}
             />
+            <FormField
+            control={form.control}
+            name="logo"
+            render={({field}) => (
+                <FormItem>  
+                <FormLabel>Company Logo</FormLabel>
+                <FormControl>
+                 <div>
+                    {
+                        field.value? (
+                            <div className='relative w-fit'>
+                            <Image src={field.value} width={400} height={400}  alt="Company logo" className='rounded-lg '/>
+                            <Button 
+                            type="button"
+                            variant="destructive"
+                            onClick={() => field.onChange("")}
+                            className=' absolute -top-2 -right-2'>
+                                <XIcon className='size-5'/>
+                            </Button>
+                            </div>
+                        ): (
+                            <UploadDropzone 
+                            endpoint="imageUploader"
+                            onClientUploadComplete={(res) => {
+                              field.onChange(res[0].url);
+                            }}
+                            onUploadError={() => {
+                              console.log("Something went wrong")
+                            }}
+                            className='ut-button:bg-blue-700 ut-button:w-24  ut-button:text-white ut-button:hover:bg-blue-700/90 
+                            ut-label:text-muted-foreground border-primary '
+                            />
+                        )
+                    }
+                 </div>
+                </FormControl>
+                <FormMessage/> 
+                </FormItem>
+            )}
+            />
+            <Button type="submit" className='w-full' disabled={pending}>
+                {
+                pending ? "Submitting..." : "Continue"
+                }
+            </Button>
         </form>
     </Form>
   )
