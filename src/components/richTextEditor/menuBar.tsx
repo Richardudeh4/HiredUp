@@ -1,8 +1,9 @@
 import {Editor} from "@tiptap/react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { Toggle } from "../ui/toggle";
-import { Bold, Heading1, Heading2, Heading3, Italic, Strikethrough } from "lucide-react";
+import { AlignLeft, Bold, Heading1, Heading2, Heading3, Italic, ListIcon, ListOrdered, ListOrderedIcon, Strikethrough } from "lucide-react";
 import { cn } from "@/lib/utils";
+
 interface iAppProps{
     editor: Editor | null;
 }
@@ -110,6 +111,78 @@ return(
                     Heading 3
                 </TooltipContent>
             </Tooltip>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Toggle size="sm" 
+                    pressed={editor.isActive("bulletList")}
+                    onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
+                    className={cn(
+                        editor.isActive("bulletList") && "bg-muted text-muted-foreground"
+                    )}
+                    >
+                      <ListIcon/> 
+                    </Toggle>
+                </TooltipTrigger>
+                <TooltipContent className="">
+                    Bullet list
+                </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Toggle size="sm" 
+                    pressed={editor.isActive("orderedList")}
+                    onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
+                    className={cn(
+                        editor.isActive("orderedList") && "bg-muted text-muted-foreground"
+                    )}
+                    >
+                      <ListOrdered/> 
+                    </Toggle>
+                </TooltipTrigger>
+                <TooltipContent className="">
+                    Ordered list
+                </TooltipContent>
+            </Tooltip>
+        </div>
+        <div className="w-px h-6 bg-border mx-2">
+        </div>
+        <div className="flex flex-wrap gap-1">
+        <Tooltip>
+                <TooltipTrigger asChild>
+                    <Toggle size="sm" 
+                    pressed={editor.isActive({
+                        textAlign: "left"
+                    })}
+                    onPressedChange={() => editor.chain().focus().setTextAlign("left").run()}
+                    className={cn(
+                        editor.isActive({textAlign: "left"}) && "bg-muted text-muted-foreground"
+                    )}
+                    >
+                      <AlignLeft/>
+                    </Toggle>
+                </TooltipTrigger>
+                <TooltipContent className="">
+                   align Left
+                </TooltipContent>
+            </Tooltip> 
+        <Tooltip>
+                <TooltipTrigger asChild>
+                    <Toggle size="sm" 
+                    pressed={editor.isActive({
+                        textAlign: "left"
+                    })}
+                    onPressedChange={() => editor.chain().focus().setTextAlign("left").run()}
+                    className={cn(
+                        editor.isActive({textAlign: "left"}) && "bg-muted text-muted-foreground"
+                    )}
+                    >
+                      <AlignLeft/>
+                    </Toggle>
+                </TooltipTrigger>
+                <TooltipContent className="">
+                   align Left
+                </TooltipContent>
+            </Tooltip> 
         </div>
     </TooltipProvider>
 </div>
