@@ -106,7 +106,7 @@ export default function page() {
                 {stats.map((item) => (
                     <div key={item.id} className='rounded-lg bg-slate-600 p-4'>
                         <h4 className="text-2xl font-bold">{item.value}</h4>
-                        <p className="text-sm text-muted-foreground">{item.label}</p>
+                        <p className="text-sm ">{item.label}</p>
                     </div>
                 ))}
             </div>
