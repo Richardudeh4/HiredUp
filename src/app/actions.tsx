@@ -7,10 +7,11 @@ import { prisma } from "./utils/db";
 import { redirect } from "next/navigation";
 
 import { revalidatePath } from "next/cache";
-import { companySchema, jobSeekerSchema } from "./utils/zodSchema";
+import { companySchema, jobSchema, jobSeekerSchema } from "./utils/zodSchema";
 import { requireUser } from "./utils/requireUser";
 import arcjet, { detectBot, shield } from "./utils/arcjet";
 import { request } from "@arcjet/next";
+// import { stripe } from "./utils/stripe";
 
 const aj = arcjet.withRule(
   shield({
@@ -86,7 +87,59 @@ export async function createCompany(data: z.infer<typeof companySchema>) {
     return redirect("/");
  }
  
+export async function createJob(data: z.infer<typeof jobSchema>){
+  const user = await requireUser(); 
+  //@ts-ignore
+  const req = await request();
 
+  const decision = await aj.protect(req);
+
+  if(decision.isDenied()){
+    throw new Error("Forbidden");
+  }
+
+const validateDate = jobSchema.parse(data);
+const company = await prisma.company.findUnique({
+    where: {
+    userId: user.id,
+  },
+  select:{
+    id:true,
+    user:{
+      select:{
+         stripeCustomerId:true,
+      }
+    }
+  }
+})
+if(!company?.id){
+  return redirect("/");
+}
+// let stripeCustomerId = company.user.stripeCustomerId;
+
+// if(!stripeCustomerId){
+//   const customer = await stripe.customers.create({
+//     email:user.email as string,
+//     name: user.name as string,
+//   });
+//   stripeCustomerId = customer.id;
+// }
+ await prisma.jobPost.create({
+  data:{
+    jobDescription: validateDate.jobDescription,
+    jobTitle: validateDate.jobTitle,
+    employmentType: validateDate.employmentType,
+    location: validateDate.location,
+    salaryFrom: validateDate.salaryFrom,
+    salaryTo: validateDate.salaryTo,
+    listingDuration: validateDate.listingDuration,
+    benefits: validateDate.benefits,
+    companyId: company.id,
+  },
+});
+return redirect("/");
+
+}
 
 // "use server";
 
